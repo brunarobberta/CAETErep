@@ -154,7 +154,7 @@ contains
       real(r_4),dimension(:),allocatable :: cue
       real(r_4),dimension(:),allocatable :: c_def
 
-      real(r_8),dimension(:),allocatable :: acumulated_biomass    !! NEW (module_reproduction)
+      real(r_4),dimension(:),allocatable :: acumulated_biomass    !! NEW (module_reproduction)
       real(r_8),dimension(:),allocatable :: seed_mass    !! NEW (module_reproduction)
       real(r_8),dimension(:),allocatable :: seed_bank_int_repro   !! NEW (module_reproduction)
       real(r_8),dimension(:),allocatable :: seed_bank_out_repro   !! NEW (module_reproduction)
@@ -437,11 +437,6 @@ contains
             !print *, "Tamanho do banco de sementes do PLS n.", p, "após a germinação:", seed_bank_out_bdgt(ri)
 
          endif
-         
-
-         acumulated_biomass(p) = germinated_seeds(p) * seed_mass(p)
-         nppa(p) = nppa(p) + acumulated_biomass(p)
-
 
          !! ANNUAL SEEDBANK DECAY
          if (n_days .eq. 365 .and. seed_bank_out_bdgt(ri) .gt. 0) then
@@ -452,10 +447,13 @@ contains
 
             !print *, "Tamanho do banco de sementes do PLS n. ", p, " após a decaimento:", seed_bank_out_bdgt(ri)
 
-
          endif
 
+      !print*, 'nppa antes', nppa(p), p
 
+   !acumulated_biomass(p) = germinated_seeds(p) * seed_mass(p)
+   !nppa(p) = nppa(p) + acumulated_biomass(p)
+      !print*, 'nppa depois', nppa(p), p 
 
          !===================================================================================
          !   END REPRODUCTION
@@ -491,6 +489,8 @@ contains
             &, cf1_pft(ri),storage_out_bdgt(:,p),day_storage(:,p),cl2(p),ca2(p)&
             &, cf2(p),litter_l(p),cwd(p), litter_fr(p),nupt(:,p),pupt(:,p)&
             &, lit_nut_content(:,p), limitation_status(:,p), npp2pay(p), uptk_strat(:, p), ar_aux)
+
+            !print*, 'nppa depois allocation', nppa(p), p 
 
 
          !       CO2 absortion (ES flow indicators (Burkhard et al., 2014))
